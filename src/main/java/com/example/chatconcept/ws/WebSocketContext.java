@@ -6,18 +6,18 @@ import org.springframework.context.annotation.Import;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 @Import({
-        InMemoryPrincipalRepository.class,
         WebSocketConfig.class,
-        LoginManager.class,
-        PrincipalHandshakeHandler.class
+        LoggingSocketHandler.class,
+        PrincipalHandshakeInterceptor.class,
+
+        InMemorySessionRepository.class,
+
+        LoginManager.class
 })
 public class WebSocketContext {
 
     @Bean
-    public WebSocketManager webSocketManager(
-            PrincipalRepository principalRepository,
-            SimpMessagingTemplate simpMessagingTemplate
-    ) {
-        return new WebSocketManager(principalRepository, simpMessagingTemplate);
+    public WebSocketManager webSocketManager(InMemorySessionRepository sessionRepository) {
+        return new WebSocketManager(sessionRepository);
     }
 }

@@ -13,8 +13,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ChatManager {
 
-    private static final String CHATROOM_WS_PATH = "/topic/chatroom";
-
     private final ChatroomRepository chatroomRepository;
     private final ChatRepository chatRepository;
     private final WebSocketManager webSocketManager;
@@ -26,7 +24,7 @@ public class ChatManager {
         chatRepository.save(chat);
         chatroomRepository.insert(chatroom.withUpdated(clock.instant()));
         chatroom.getMembers()
-                .forEach(userId -> webSocketManager.sendMessage(userId, CHATROOM_WS_PATH, chatroom.getId().toString()));
+                .forEach(userId -> webSocketManager.sendMessage(userId, chatroom.getId().toString()));
     }
 
     public List<Chat> getChatsAfter(UUID room, Instant after) {

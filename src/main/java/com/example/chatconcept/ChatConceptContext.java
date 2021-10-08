@@ -37,9 +37,9 @@ public class ChatConceptContext {
 
     @Bean
     public DSLContext dslContext(
-            @Value("${spring.datasource.username}") String dbUsername,
-            @Value("${spring.datasource.password}") String dbPassword,
-            @Value("${spring.datasource.url}") String jdbcUrl
+            @Value("${db.datasource.username}") String dbUsername,
+            @Value("${db.datasource.password}") String dbPassword,
+            @Value("${db.datasource.url}") String jdbcUrl
     ) {
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(jdbcUrl);
@@ -48,7 +48,6 @@ public class ChatConceptContext {
         config.setPoolName("jam-pool");
         config.setMaximumPoolSize(10);
         config.setMaxLifetime(1800000);
-        config.setIdleTimeout(30000);
 
         return DSL.using(new HikariDataSource(config), SQLDialect.MYSQL);
     }

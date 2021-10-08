@@ -1,21 +1,21 @@
 package com.example.chatconcept.ws;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
-import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
-import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
 @RequiredArgsConstructor
-@EnableWebSocketMessageBroker
-public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+@EnableWebSocket
+public class WebSocketConfig implements WebSocketConfigurer {
 
-    private final PrincipalHandshakeHandler handshakeHandler;
+    private final PrincipalHandshakeInterceptor handshakeInterceptor;
+    private final LoggingSocketHandler socketHandler;
 
-    @Override
-    public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws")
+    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+        registry.addHandler(socketHandler, "/ws")
                 .setAllowedOrigins("http://localhost:3000")
-                .setHandshakeHandler(handshakeHandler)
+                .addInterceptors(handshakeInterceptor)
                 .withSockJS();
     }
 }

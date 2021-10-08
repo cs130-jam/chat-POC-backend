@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-3.15.0.xsd">
+    <!-- Configure the database connection here -->
+    <jdbc>
+        <driver>com.mysql.cj.jdbc.Driver</driver>
+        <url>jdbc:mysql://localhost:3306/jam</url>
+        <user>debian-sys-maint</user>
+        <password>onIicRoSql8m6UTZ</password>
+    </jdbc>
+
+    <generator>
+        <!-- The default code generator. You can override this one, to generate your own code style.
+             Supported generators:
+             - org.jooq.codegen.JavaGenerator
+             - org.jooq.codegen.KotlinGenerator
+             - org.jooq.codegen.ScalaGenerator
+             Defaults to org.jooq.codegen.JavaGenerator -->
+        <name>org.jooq.codegen.JavaGenerator</name>
+
+        <database>
+            <name>org.jooq.meta.mysql.MySQLDatabase</name>
+            <inputSchema>jam</inputSchema>
+            <includes>.*</includes>
+            <excludes></excludes>
+
+            <forcedTypes>
+                <forcedType>
+                    <userType>java.util.UUID</userType>
+                    <converter>com.example.chatconcept.util.UUIDConverter</converter>
+                    <includeExpression>
+                        .*\.users\.id|
+                        .*\.chatrooms\.id|
+                        .*\.chatroom_members\.room|
+                        .*\.chatroom_members\.user|
+                        .*\.chats\.room|
+                        .*\.chats\.user
+                    </includeExpression>
+                    <includeTypes>CHAR\(36\)</includeTypes>
+                </forcedType>
+                <forcedType>
+                    <userType>java.time.Instant</userType>
+                    <converter>com.example.chatconcept.util.InstantConverter</converter>
+                    <includeExpression>
+                        .*\.chatrooms\.updated|
+                        .*\.chats\.at
+                    </includeExpression>
+                    <includeTypes>BIGINT</includeTypes>
+                </forcedType>
+                <forcedType>
+                    <userType>com.example.chatconcept.User.Profile</userType>
+                    <converter>com.example.chatconcept.User.Profile.Converter</converter>
+                    <includeExpression>.*\.users\.profile</includeExpression>
+                    <includeTypes>TEXT</includeTypes>
+                </forcedType>
+                <forcedType>
+                    <name>BOOLEAN</name>
+                    <includeTypes>(?i:TINYINT\(1\))</includeTypes>
+                </forcedType>
+            </forcedTypes>
+        </database>
+
+        <target>
+            <!-- The destination package of your generated classes (within the destination directory) -->
+            <packageName>generated.jooq</packageName>
+
+            <!-- The destination directory of your generated classes. Using Maven directory layout here -->
+            <directory>./src/main/java</directory>
+        </target>
+    </generator>
+</configuration>

@@ -1,4 +1,4 @@
-package com.example.chatconcept;
+package com.example.chatconcept.user;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;

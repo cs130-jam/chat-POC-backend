@@ -3,8 +3,8 @@ package com.example.chatconcept.resources;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-import com.example.chatconcept.LoginManager;
-import com.example.chatconcept.SessionToken;
+import com.example.chatconcept.user.LoginManager;
+import com.example.chatconcept.user.SessionToken;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import org.springframework.web.bind.annotation.RequestMapping;

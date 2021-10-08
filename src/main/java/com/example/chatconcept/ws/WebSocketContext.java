@@ -1,9 +1,8 @@
 package com.example.chatconcept.ws;
 
-import com.example.chatconcept.LoginManager;
+import com.example.chatconcept.user.LoginManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 @Import({
         WebSocketConfig.class,

@@ -1,4 +1,4 @@
-package com.example.chatconcept;
+package com.example.chatconcept.chat;
 
 import java.time.Instant;
 import java.util.List;

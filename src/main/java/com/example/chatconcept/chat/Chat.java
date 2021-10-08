@@ -1,4 +1,4 @@
-package com.example.chatconcept;
+package com.example.chatconcept.chat;
 
 import lombok.NonNull;
 import lombok.Value;

@@ -4,8 +4,8 @@
 package generated.jooq.tables;
 
 
-import com.example.chatconcept.User.Profile;
-import com.example.chatconcept.User.Profile.Converter;
+import com.example.chatconcept.user.User.Profile;
+import com.example.chatconcept.user.User.Profile.Converter;
 import com.example.chatconcept.util.UUIDConverter;
 
 import generated.jooq.Jam;

@@ -1,4 +1,4 @@
-package com.example.chatconcept;
+package com.example.chatconcept.chat;
 
 import static generated.jooq.tables.ChatroomMembers.CHATROOM_MEMBERS;
 import static generated.jooq.tables.Chatrooms.CHATROOMS;

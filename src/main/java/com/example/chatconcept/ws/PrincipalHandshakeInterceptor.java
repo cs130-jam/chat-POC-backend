@@ -1,9 +1,9 @@
 package com.example.chatconcept.ws;
 
-import static com.example.chatconcept.LoginManager.SESSION_TOKEN_KEY;
+import static com.example.chatconcept.user.LoginManager.SESSION_TOKEN_KEY;
 
-import com.example.chatconcept.LoginManager;
-import com.example.chatconcept.SessionToken;
+import com.example.chatconcept.user.LoginManager;
+import com.example.chatconcept.user.SessionToken;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.server.ServerHttpRequest;

@@ -1,4 +1,4 @@
-package com.example.chatconcept;
+package com.example.chatconcept.user;
 
 import com.example.chatconcept.util.JsonConverter;
 import lombok.NonNull;

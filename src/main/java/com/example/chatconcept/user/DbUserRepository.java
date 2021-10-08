@@ -1,4 +1,4 @@
-package com.example.chatconcept;
+package com.example.chatconcept.user;
 
 import static generated.jooq.tables.Users.USERS;
 

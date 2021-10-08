@@ -1,5 +1,6 @@
-package com.example.chatconcept;
+package com.example.chatconcept.user;
 
+import com.example.chatconcept.UnknownTokenException;
 import com.example.chatconcept.resources.UserId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;

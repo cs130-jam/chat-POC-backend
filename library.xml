@@ -47,8 +47,8 @@
                     <includeTypes>BIGINT</includeTypes>
                 </forcedType>
                 <forcedType>
-                    <userType>com.example.chatconcept.User.Profile</userType>
-                    <converter>com.example.chatconcept.User.Profile.Converter</converter>
+                    <userType>com.example.chatconcept.user.User.Profile</userType>
+                    <converter>com.example.chatconcept.user.User.Profile.Converter</converter>
                     <includeExpression>.*\.users\.profile</includeExpression>
                     <includeTypes>TEXT</includeTypes>
                 </forcedType>

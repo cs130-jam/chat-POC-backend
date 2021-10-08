@@ -4,7 +4,7 @@
 package generated.jooq.tables.records;
 
 
-import com.example.chatconcept.User.Profile;
+import com.example.chatconcept.user.User.Profile;
 
 import generated.jooq.tables.Users;
 

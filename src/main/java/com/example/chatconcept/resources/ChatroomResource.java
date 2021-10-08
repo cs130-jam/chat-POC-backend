@@ -1,8 +1,8 @@
 package com.example.chatconcept.resources;
 
-import com.example.chatconcept.ChatManager;
-import com.example.chatconcept.Chatroom;
-import com.example.chatconcept.ChatroomRepository;
+import com.example.chatconcept.chat.ChatManager;
+import com.example.chatconcept.chat.Chatroom;
+import com.example.chatconcept.chat.ChatroomRepository;
 import com.example.chatconcept.UnknownChatroomException;
 import com.google.common.collect.ImmutableList;
 import lombok.RequiredArgsConstructor;

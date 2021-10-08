@@ -1,10 +1,9 @@
-package com.example.chatconcept;
+package com.example.chatconcept.chat;
 
 import static generated.jooq.tables.Chats.CHATS;
 import static java.lang.Math.min;
 
 import generated.jooq.tables.records.ChatsRecord;
-import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Value;
 

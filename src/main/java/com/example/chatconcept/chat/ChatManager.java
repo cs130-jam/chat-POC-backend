@@ -1,5 +1,6 @@
-package com.example.chatconcept;
+package com.example.chatconcept.chat;
 
+import com.example.chatconcept.UnknownChatroomException;
 import com.example.chatconcept.ws.WebSocketManager;
 import lombok.RequiredArgsConstructor;
 

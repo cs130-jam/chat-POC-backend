@@ -1,4 +1,4 @@
-package com.example.chatconcept;
+package com.example.chatconcept.user;
 
 import java.util.Optional;
 import java.util.UUID;

@@ -1,4 +1,4 @@
-package com.example.chatconcept;
+package com.example.chatconcept.chat;
 
 import com.google.common.collect.ImmutableList;
 import lombok.NonNull;

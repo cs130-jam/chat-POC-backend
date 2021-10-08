@@ -1,8 +1,14 @@
 package com.example.chatconcept;
 
+import com.example.chatconcept.chat.ChatManager;
+import com.example.chatconcept.chat.DbChatRepository;
+import com.example.chatconcept.chat.DbChatroomRepository;
 import com.example.chatconcept.resources.ChatResource;
 import com.example.chatconcept.resources.ChatroomResource;
 import com.example.chatconcept.resources.LoginResource;
+import com.example.chatconcept.user.DbUserRepository;
+import com.example.chatconcept.user.InMemorySessionTokenRepository;
+import com.example.chatconcept.user.LoginManager;
 import com.example.chatconcept.util.ObjectMapperProvider;
 import com.example.chatconcept.ws.WebSocketContext;
 import com.fasterxml.jackson.databind.ObjectMapper;

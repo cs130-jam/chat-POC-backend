@@ -8,16 +8,16 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 @Import({
         InMemoryPrincipalRepository.class,
         WebSocketConfig.class,
-        LoginManager.class
+        LoginManager.class,
+        PrincipalHandshakeHandler.class
 })
 public class WebSocketContext {
 
     @Bean
     public WebSocketManager webSocketManager(
             PrincipalRepository principalRepository,
-            LoginManager loginManager,
             SimpMessagingTemplate simpMessagingTemplate
     ) {
-        return new WebSocketManager(principalRepository, loginManager, simpMessagingTemplate);
+        return new WebSocketManager(principalRepository, simpMessagingTemplate);
     }
 }

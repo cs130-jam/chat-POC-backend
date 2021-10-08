@@ -45,7 +45,6 @@ public class ChatConceptContext {
         config.setJdbcUrl(jdbcUrl);
         config.setUsername(dbUsername);
         config.setPassword(dbPassword);
-        config.setPoolName("jam-pool");
         config.setMaximumPoolSize(10);
         config.setMaxLifetime(1800000);
 

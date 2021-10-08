@@ -12,12 +12,18 @@ import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
-@RequiredArgsConstructor
 public class DbChatRepository implements ChatRepository {
 
-    @Value("${db.chats.max}")
-    private final Integer maxChats;
     private final DSLContext context;
+    private final Integer maxChats;
+
+    public DbChatRepository(
+            DSLContext context,
+            @Value("${db.chats.max}") Integer maxChats
+    ) {
+        this.context = context;
+        this.maxChats = maxChats;
+    }
 
     @Override
     public List<Chat> getAfter(UUID room, Instant after) {

@@ -27,16 +27,16 @@ public class ChatResource {
     private final ChatManager chatManager;
     private final Clock clock;
 
-    @GetMapping(value = "/chatroom/{roomId}/after", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public List<Chat> chatsAfter(@PathVariable UUID roomId, @RequestParam Instant after, @UserId UUID userId) {
+    @GetMapping(value = "/chatroom/{roomId}/after", produces = APPLICATION_JSON_VALUE)
+    public List<Chat> chatsAfter(@PathVariable UUID roomId, @RequestParam Instant time, @UserId UUID userId) {
         if (chatManager.hasChatroom(userId, roomId)) {
-            return chatManager.getChatsAfter(roomId, after);
+            return chatManager.getChatsAfter(roomId, time);
         } else {
             throw new UnknownChatroomException("User not in given chatroom");
         }
     }
 
-    @GetMapping(value = "/chatroom/{roomId}/count", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/chatroom/{roomId}/recent", produces = APPLICATION_JSON_VALUE)
     public List<Chat> recentChats(@PathVariable UUID roomId, @RequestParam int count, @UserId UUID userId) {
         if (chatManager.hasChatroom(userId, roomId)) {
             return chatManager.getRecentChats(roomId, count);
@@ -48,6 +48,6 @@ public class ChatResource {
     @PostMapping(value = "/chatroom/{roomId}")
     @ResponseStatus(HttpStatus.OK)
     public void sendChat(@PathVariable UUID roomId, @RequestBody String chat, @UserId UUID userId) {
-        chatManager.sendChat(new Chat(roomId, userId, chat, clock.instant()));
+        chatManager.sendChat(new Chat(null, roomId, userId, chat, clock.instant()));
     }
 }

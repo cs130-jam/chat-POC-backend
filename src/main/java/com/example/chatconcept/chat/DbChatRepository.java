@@ -52,6 +52,6 @@ public class DbChatRepository implements ChatRepository {
     }
 
     private Chat fromRecord(ChatsRecord record) {
-        return new Chat(record.getRoom(), record.getUser(), record.getMessage(), record.getAt());
+        return new Chat(record.getId(), record.getRoom(), record.getUser(), record.getMessage(), record.getAt());
     }
 }

@@ -1,6 +1,4 @@
 DROP TABLE chats;
 DROP TABLE chatroom_members;
 DROP TABLE chatrooms;
-DROP TABLE friends;
-DROP TABLE friend_requests;
 DROP TABLE users;

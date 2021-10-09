@@ -1,0 +1,4 @@
+DELETE FROM chats;
+DELETE FROM chatroom_members;
+DELETE FROM chatrooms;
+DELETE FROM users;

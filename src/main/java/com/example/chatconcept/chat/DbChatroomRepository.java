@@ -45,27 +45,26 @@ public class DbChatroomRepository implements ChatroomRepository {
 
     @Override
     public Collection<Chatroom> getAll(UUID userId) {
-        return context.select(CHATROOM_MEMBERS.USER, CHATROOMS.asterisk())
+        return groupOnId(context.select(CHATROOM_MEMBERS.USER, CHATROOMS.asterisk())
                 .from(CHATROOM_MEMBERS.leftJoin(CHATROOMS)
                         .on(CHATROOM_MEMBERS.ROOM.eq(CHATROOMS.ID)))
-                .where(CHATROOM_MEMBERS.USER.in(context.select(CHATROOM_MEMBERS.ROOM)
+                .where(CHATROOM_MEMBERS.USER.in(context.select(CHATROOM_MEMBERS.USER)
                         .from(CHATROOM_MEMBERS)
                         .where(CHATROOM_MEMBERS.USER.eq(userId))))
-                .fetch(PartialChatroom::fromRecord)
-                .stream()
-                .collect(Collectors.groupingBy(
-                        partial -> partial.getChatroomsRecord().get(CHATROOMS.ID),
-                        ChatroomBuilder.collector()))
-                .values();
+                .fetch(PartialChatroom::fromRecord));
     }
 
     @Override
     public Collection<Chatroom> allChatrooms() {
-        return context.select(CHATROOM_MEMBERS.USER, CHATROOMS.asterisk())
+        return groupOnId(context.select(CHATROOM_MEMBERS.USER, CHATROOMS.asterisk())
                 .from(CHATROOM_MEMBERS.leftJoin(CHATROOMS)
                         .on(CHATROOM_MEMBERS.ROOM.eq(CHATROOMS.ID)))
-                .fetch(PartialChatroom::fromRecord)
-                .stream()
+                .fetch(PartialChatroom::fromRecord));
+
+    }
+
+    private Collection<Chatroom> groupOnId(List<PartialChatroom> partials) {
+        return partials.stream()
                 .collect(Collectors.groupingBy(
                         partial -> partial.getChatroomsRecord().get(CHATROOMS.ID),
                         ChatroomBuilder.collector()))

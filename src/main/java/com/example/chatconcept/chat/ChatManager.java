@@ -51,6 +51,6 @@ public class ChatManager {
     public boolean hasChatroom(UUID userId, UUID roomId) {
         return userChatrooms(userId)
                 .stream()
-                .anyMatch(chatroom -> chatroom.getId() == roomId);
+                .anyMatch(chatroom -> chatroom.getId().equals(roomId));
     }
 }

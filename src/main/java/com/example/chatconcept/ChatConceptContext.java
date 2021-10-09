@@ -9,7 +9,6 @@ import com.example.chatconcept.user.UserContext;
 import com.example.chatconcept.util.ObjectMapperProvider;
 import com.example.chatconcept.ws.WebSocketContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.jooq.DSLContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;

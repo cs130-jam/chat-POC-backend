@@ -2,9 +2,10 @@ package com.example.chatconcept.resources;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+import com.example.chatconcept.UnknownChatroomException;
+import com.example.chatconcept.UserId;
 import com.example.chatconcept.chat.Chat;
 import com.example.chatconcept.chat.ChatManager;
-import com.example.chatconcept.UnknownChatroomException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;

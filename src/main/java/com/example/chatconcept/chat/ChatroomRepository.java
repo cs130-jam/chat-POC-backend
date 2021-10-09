@@ -11,5 +11,5 @@ public interface ChatroomRepository {
 
     void insert(Chatroom chatroom);
     void removeMember(UUID roomId, UUID userId);
-    void addMember(UUID roomId, UUID userId);
+    void insertMember(UUID roomId, UUID userId);
 }

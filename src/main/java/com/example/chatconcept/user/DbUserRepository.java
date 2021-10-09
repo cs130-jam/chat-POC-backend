@@ -25,6 +25,8 @@ public class DbUserRepository implements UserRepository {
     public void insert(User user) {
         context.insertInto(USERS)
                 .set(toRecord(user))
+                .onDuplicateKeyUpdate()
+                .set(toRecord(user))
                 .execute();
     }
 

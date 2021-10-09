@@ -2,7 +2,6 @@ package com.example.chatconcept.ws;
 
 import org.springframework.web.socket.WebSocketSession;
 
-import java.security.Principal;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;

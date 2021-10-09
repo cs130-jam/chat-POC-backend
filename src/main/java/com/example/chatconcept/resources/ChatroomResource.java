@@ -1,9 +1,10 @@
 package com.example.chatconcept.resources;
 
+import com.example.chatconcept.UnknownChatroomException;
+import com.example.chatconcept.UserId;
 import com.example.chatconcept.chat.ChatManager;
 import com.example.chatconcept.chat.Chatroom;
 import com.example.chatconcept.chat.ChatroomRepository;
-import com.example.chatconcept.UnknownChatroomException;
 import com.google.common.collect.ImmutableList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,7 +45,7 @@ public class ChatroomResource {
                     chatroomRepository.insert(new Chatroom(id, ImmutableList.of(), clock.instant(), false));
                     return id;
                 });
-        chatroomRepository.addMember(roomId, userId);
+        chatroomRepository.insertMember(roomId, userId);
         return roomId;
     }
 }

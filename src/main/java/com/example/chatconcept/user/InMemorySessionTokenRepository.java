@@ -38,4 +38,10 @@ public class InMemorySessionTokenRepository implements SessionTokenRepository {
                         ? Optional.empty()
                         : Optional.ofNullable(data.inverse().get(token)));
     }
+
+    @Override
+    public void logoutUser(UUID userId) {
+        Optional.ofNullable(data.get(userId)).ifPresent(expirations::remove);
+        data.remove(userId);
+    }
 }

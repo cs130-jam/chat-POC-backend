@@ -2,9 +2,9 @@ package com.example.chatconcept.ws;
 
 import static com.example.chatconcept.user.LoginManager.SESSION_TOKEN_KEY;
 
+import com.example.chatconcept.UnknownTokenException;
 import com.example.chatconcept.user.LoginManager;
 import com.example.chatconcept.user.SessionToken;
-import com.example.chatconcept.UnknownTokenException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.socket.TextMessage;

@@ -76,6 +76,8 @@ public class DbChatroomRepository implements ChatroomRepository {
     public void insert(Chatroom chatroom) {
         context.insertInto(CHATROOMS)
                 .set(toRecord(chatroom))
+                .onDuplicateKeyUpdate()
+                .set(toRecord(chatroom))
                 .execute();
     }
 
@@ -88,9 +90,10 @@ public class DbChatroomRepository implements ChatroomRepository {
     }
 
     @Override
-    public void addMember(UUID roomId, UUID userId) {
+    public void insertMember(UUID roomId, UUID userId) {
         context.insertInto(CHATROOM_MEMBERS)
                 .set(toMemberRecord(roomId, userId))
+                .onDuplicateKeyIgnore()
                 .execute();
     }
 

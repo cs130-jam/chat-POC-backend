@@ -3,6 +3,7 @@ package com.example.chatconcept.resources;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import com.example.chatconcept.UnknownUserException;
+import com.example.chatconcept.UserId;
 import com.example.chatconcept.user.User;
 import com.example.chatconcept.user.UserRepository;
 import lombok.RequiredArgsConstructor;

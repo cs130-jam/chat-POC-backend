@@ -1,7 +1,7 @@
 package com.example.chatconcept.user;
 
 import com.example.chatconcept.UnknownTokenException;
-import com.example.chatconcept.resources.UserId;
+import com.example.chatconcept.UserId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -30,6 +30,10 @@ public class LoginManager implements HandlerMethodArgumentResolver {
         return tokenRepository.getToken(userId);
     }
 
+    public void logoutUser(UUID userId) {
+        tokenRepository.logoutUser(userId);
+    }
+
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         return parameter.hasParameterAnnotation(UserId.class);
@@ -37,13 +41,13 @@ public class LoginManager implements HandlerMethodArgumentResolver {
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
-        String tokenString = webRequest.getHeader(SESSION_TOKEN_KEY);
-        if (tokenString == null || tokenString.length() == 0) {
+        String token = webRequest.getHeader(SESSION_TOKEN_KEY);
+        if (token == null || token.length() == 0) {
             throw new UnknownTokenException();
         }
 
-        SessionToken token = SessionToken.fromString(tokenString);
-        return userIdForToken(token)
+        SessionToken sessionToken = SessionToken.fromString(token);
+        return userIdForToken(sessionToken)
                 .orElseThrow(UnknownTokenException::new);
     }
 }

@@ -28,7 +28,7 @@ public class DbChatRepository implements ChatRepository {
     public List<Chat> getAfter(UUID room, Instant after) {
         return context.selectFrom(CHATS)
                 .where(CHATS.ROOM.eq(room)
-                        .and(CHATS.AT.ge(after)))
+                        .and(CHATS.AT.gt(after)))
                 .orderBy(CHATS.AT.desc())
                 .limit(maxChats)
                 .fetch(this::fromRecord);

@@ -4,14 +4,16 @@ import com.example.chatconcept.UnknownTokenException;
 import com.example.chatconcept.resources.UserId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
-import org.springframework.web.bind.support.WebArgumentResolver;
+import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.method.support.ModelAndViewContainer;
 
 import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
-public class LoginManager implements WebArgumentResolver {
+public class LoginManager implements HandlerMethodArgumentResolver {
 
     public static final String SESSION_TOKEN_KEY = "session-token";
 
@@ -29,17 +31,19 @@ public class LoginManager implements WebArgumentResolver {
     }
 
     @Override
-    public Object resolveArgument(MethodParameter methodParameter, NativeWebRequest webRequest) {
-        if (methodParameter.hasMethodAnnotation(UserId.class)) {
-            String tokenString = webRequest.getHeader(SESSION_TOKEN_KEY);
-            if (tokenString == null || tokenString.length() == 0) {
-                throw new UnknownTokenException();
-            }
+    public boolean supportsParameter(MethodParameter parameter) {
+        return parameter.hasParameterAnnotation(UserId.class);
+    }
 
-            SessionToken token = SessionToken.fromString(tokenString);
-            return userIdForToken(token)
-                    .orElseThrow(UnknownTokenException::new);
+    @Override
+    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
+        String tokenString = webRequest.getHeader(SESSION_TOKEN_KEY);
+        if (tokenString == null || tokenString.length() == 0) {
+            throw new UnknownTokenException();
         }
-        return UNRESOLVED;
+
+        SessionToken token = SessionToken.fromString(tokenString);
+        return userIdForToken(token)
+                .orElseThrow(UnknownTokenException::new);
     }
 }

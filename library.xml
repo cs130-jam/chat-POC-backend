@@ -9,12 +9,6 @@
     </jdbc>
 
     <generator>
-        <!-- The default code generator. You can override this one, to generate your own code style.
-             Supported generators:
-             - org.jooq.codegen.JavaGenerator
-             - org.jooq.codegen.KotlinGenerator
-             - org.jooq.codegen.ScalaGenerator
-             Defaults to org.jooq.codegen.JavaGenerator -->
         <name>org.jooq.codegen.JavaGenerator</name>
 
         <database>

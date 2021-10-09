@@ -6,19 +6,21 @@ import static generated.jooq.tables.Chatrooms.CHATROOMS;
 import com.google.common.collect.ImmutableList;
 import generated.jooq.tables.records.ChatroomMembersRecord;
 import generated.jooq.tables.records.ChatroomsRecord;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import javax.annotation.Nullable;
 import javax.sql.DataSource;
 
 @Component
@@ -115,41 +117,34 @@ public class DbChatroomRepository implements ChatroomRepository {
         }
     }
 
-    @Value
+    @Data
+    @AllArgsConstructor
     private static class ChatroomBuilder {
-        ImmutableList<UUID> members;
-        @Nullable
+        List<UUID> members;
         ChatroomsRecord chatroomsRecord;
 
         public Chatroom build() {
             return new Chatroom(
                     chatroomsRecord.getId(),
-                    members,
+                    ImmutableList.copyOf(members),
                     chatroomsRecord.getUpdated(),
                     chatroomsRecord.getIsdirectmessage());
         }
 
-        public ChatroomBuilder append(PartialChatroom partialChatroom) {
-            return new ChatroomBuilder(
-                    ImmutableList.<UUID>builder()
-                            .addAll(members)
-                            .add(partialChatroom.getUserId())
-                            .build(),
-                    partialChatroom.getChatroomsRecord());
+        public void append(PartialChatroom partialChatroom) {
+            members.add(partialChatroom.getUserId());
+            chatroomsRecord = partialChatroom.getChatroomsRecord();
         }
 
         public ChatroomBuilder combine(ChatroomBuilder other) {
-            return new ChatroomBuilder(
-                    ImmutableList.<UUID>builder()
-                            .addAll(members)
-                            .addAll(other.members)
-                            .build(),
-                    chatroomsRecord);
+            members.addAll(other.members);
+            chatroomsRecord = chatroomsRecord == null ? other.chatroomsRecord : chatroomsRecord;
+            return this;
         }
 
         public static Collector<PartialChatroom, ChatroomBuilder, Chatroom> collector() {
             return Collector.of(
-                    () -> new ChatroomBuilder(ImmutableList.of(), null),
+                    () -> new ChatroomBuilder(new ArrayList<>(), null),
                     ChatroomBuilder::append,
                     ChatroomBuilder::combine,
                     ChatroomBuilder::build);

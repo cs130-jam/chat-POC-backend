@@ -8,6 +8,9 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import lombok.extern.slf4j.Slf4j;
 import org.jooq.Converter;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+
 @Slf4j
 public class JsonConverter<T> implements Converter<String, T> {
 
@@ -17,11 +20,17 @@ public class JsonConverter<T> implements Converter<String, T> {
 
     @SuppressWarnings("unchecked")
     public JsonConverter() {
-        TypeReference genericType = new TypeReference<T>() {};
-        ObjectMapper mapper = ObjectMapperProvider.get();
-        reader = mapper.readerFor(genericType);
-        writer = mapper.writerFor(genericType);
-        toType = (Class<T>) mapper.constructType(genericType).getRawClass();
+        Type conversionType = ((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        ObjectMapper objectMapper = ObjectMapperProvider.get();
+        toType = (Class<T>)objectMapper.constructType(conversionType).getRawClass();
+        TypeReference<T> typeReference = new TypeReference<T>() {
+            @Override
+            public Type getType() {
+                return conversionType;
+            }
+        };
+        reader = objectMapper.readerFor(typeReference);
+        writer = objectMapper.writerFor(typeReference);
     }
 
     @Override

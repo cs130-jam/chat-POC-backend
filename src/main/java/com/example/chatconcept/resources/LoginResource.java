@@ -27,7 +27,7 @@ public class LoginResource {
         return loginManager.loginUser(loginPayload.username);
     }
 
-    @PostMapping(value = "user/logout")
+    @PostMapping(value = "/logout")
     @ResponseStatus(HttpStatus.OK)
     public void logout(@UserId UUID userId) {
         loginManager.logoutUser(userId);

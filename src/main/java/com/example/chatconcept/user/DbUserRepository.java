@@ -12,7 +12,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class DbUserRepository implements UserRepository {
 
-    DSLContext context;
+    private final DSLContext context;
 
     @Override
     public Optional<User> find(UUID userId) {

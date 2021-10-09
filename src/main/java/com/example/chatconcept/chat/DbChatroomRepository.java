@@ -9,6 +9,8 @@ import generated.jooq.tables.records.ChatroomsRecord;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import org.jooq.DSLContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.List;
@@ -17,11 +19,16 @@ import java.util.UUID;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import javax.annotation.Nullable;
+import javax.sql.DataSource;
 
+@Component
 @RequiredArgsConstructor
 public class DbChatroomRepository implements ChatroomRepository {
 
     private final DSLContext context;
+
+    @Autowired
+    private DataSource dataSource;
 
     @Override
     public Optional<Chatroom> get(UUID roomId) {

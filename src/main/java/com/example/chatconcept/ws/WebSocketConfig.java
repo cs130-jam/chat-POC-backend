@@ -9,11 +9,12 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
 
+    private static final String WS_URL = "/jam";
     private final PrincipalHandshakeInterceptor handshakeInterceptor;
     private final LoggingSocketHandler socketHandler;
 
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(socketHandler, "/ws")
+        registry.addHandler(socketHandler, WS_URL)
                 .setAllowedOrigins("http://localhost:3000")
                 .addInterceptors(handshakeInterceptor)
                 .withSockJS();

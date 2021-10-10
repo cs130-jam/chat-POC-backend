@@ -4,6 +4,7 @@ import com.example.chatconcept.chat.ChatContext;
 import com.example.chatconcept.resources.ChatResource;
 import com.example.chatconcept.resources.ChatroomResource;
 import com.example.chatconcept.resources.LoginResource;
+import com.example.chatconcept.resources.UserResource;
 import com.example.chatconcept.user.LoginManager;
 import com.example.chatconcept.user.UserContext;
 import com.example.chatconcept.util.ObjectMapperProvider;
@@ -26,7 +27,8 @@ import java.util.List;
 
         ChatResource.class,
         ChatroomResource.class,
-        LoginResource.class
+        LoginResource.class,
+        UserResource.class
 })
 public class ChatConceptContext {
 

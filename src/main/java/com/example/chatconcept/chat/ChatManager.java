@@ -1,8 +1,10 @@
 package com.example.chatconcept.chat;
 
 import com.example.chatconcept.UnknownChatroomException;
+import com.example.chatconcept.UnknownUserException;
 import com.example.chatconcept.ws.WebSocketManager;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.Clock;
 import java.time.Instant;
@@ -11,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Slf4j
 @RequiredArgsConstructor
 public class ChatManager {
 
@@ -24,8 +27,15 @@ public class ChatManager {
                         .orElseThrow(() -> new UnknownChatroomException("No chatroom found for given id"));
         chatRepository.save(chat);
         chatroomRepository.insert(chatroom.withUpdated(clock.instant()));
-        chatroom.getMembers()
-                .forEach(userId -> webSocketManager.sendMessage(userId, chatroom.getId().toString()));
+        chatroom.getMembers().forEach(userId -> pingUser(chatroom.getId(), userId));
+    }
+
+    private void pingUser(UUID roomId, UUID userId) {
+        try {
+            webSocketManager.sendMessage(userId, roomId.toString());
+        } catch (UnknownUserException e) {
+            log.info("Unable to ping {} for chatroom {}", userId, roomId);
+        }
     }
 
     public List<Chat> getChatsAfter(UUID room, Instant after) {

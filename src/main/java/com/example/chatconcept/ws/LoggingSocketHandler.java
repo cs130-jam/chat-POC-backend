@@ -1,7 +1,5 @@
 package com.example.chatconcept.ws;
 
-import static com.example.chatconcept.user.LoginManager.SESSION_TOKEN_KEY;
-
 import com.example.chatconcept.UnknownTokenException;
 import com.example.chatconcept.user.LoginManager;
 import com.example.chatconcept.user.SessionInfo;
@@ -22,12 +20,7 @@ public class LoggingSocketHandler extends TextWebSocketHandler {
 
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message) {
-        log.info("Got message {} for session {}", message.getPayload(), session.getId());
-    }
-
-    @Override
-    public void afterConnectionEstablished(WebSocketSession session) {
-        UUID userId = loginManager.fromToken((String) session.getAttributes().get(SESSION_TOKEN_KEY))
+        UUID userId = loginManager.fromToken(message.getPayload())
                 .map(SessionInfo::getUserId)
                 .orElseThrow(UnknownTokenException::new);
         sessionRepository.insert(userId, session);

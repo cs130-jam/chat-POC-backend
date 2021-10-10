@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Import;
 @Import({
         WebSocketConfig.class,
         LoggingSocketHandler.class,
-        PrincipalHandshakeInterceptor.class,
+//        PrincipalHandshakeInterceptor.class,
         InMemorySessionRepository.class,
 
         UserContext.class

@@ -4,6 +4,7 @@ import com.example.chatconcept.UnknownUserException;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -21,6 +22,8 @@ public class WebSocketManager {
     }
 
     public boolean userConnected(UUID userId) {
-        return sessionRepository.get(userId).isPresent();
+        return sessionRepository.get(userId)
+                .map(WebSocketSession::isOpen)
+                .orElse(false);
     }
 }

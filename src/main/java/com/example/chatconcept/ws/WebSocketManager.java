@@ -19,4 +19,8 @@ public class WebSocketManager {
                 .orElseThrow(() -> new UnknownUserException("No principal found for given user id"))
                 .sendMessage(new TextMessage(message));
     }
+
+    public boolean userConnected(UUID userId) {
+        return sessionRepository.get(userId).isPresent();
+    }
 }

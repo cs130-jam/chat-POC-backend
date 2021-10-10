@@ -1,6 +1,7 @@
 package com.example.chatconcept.resources;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.http.MediaType.TEXT_PLAIN_VALUE;
 
 import com.example.chatconcept.UnknownChatroomException;
 import com.example.chatconcept.UserId;
@@ -51,7 +52,7 @@ public class ChatResource {
         }
     }
 
-    @PostMapping(value = "/chatroom/{roomId}")
+    @PostMapping(value = "/chatroom/{roomId}", consumes = TEXT_PLAIN_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public void sendChat(@PathVariable UUID roomId, @RequestBody String chat, @UserId UUID userId) {
         chatManager.sendChat(new Chat(null, roomId, userId, chat, clock.instant()));

@@ -2,13 +2,22 @@ package com.example.chatconcept.user;
 
 import com.example.chatconcept.UnknownTokenException;
 import com.example.chatconcept.UserId;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
+import java.security.Key;
+import java.time.Clock;
+import java.time.Duration;
+import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -16,22 +25,42 @@ import java.util.UUID;
 public class LoginManager implements HandlerMethodArgumentResolver {
 
     public static final String SESSION_TOKEN_KEY = "session-token";
+    private final static Duration TOKEN_TTL = Duration.ofHours(10);
 
     private final UserRepository userRepository;
-    private final SessionTokenRepository tokenRepository;
+    private final Clock clock;
+    private final ObjectMapper objectMapper;
+    private final Key jwtKey;
 
-    public Optional<UUID> userIdForToken(SessionToken token) {
-        return tokenRepository.getUser(token);
-    }
-
-    public SessionToken loginUser(String username) {
+    public String loginUser(String username) {
         UUID userId = UUID.randomUUID();
         userRepository.insert(new User(userId, new User.Profile(username)));
-        return tokenRepository.getToken(userId);
+        return toToken(new SessionInfo(userId));
     }
 
-    public void logoutUser(UUID userId) {
-        tokenRepository.logoutUser(userId);
+    public Optional<SessionInfo> fromToken(String token) {
+        try {
+            return Optional.of(objectMapper.readValue(
+                    Jwts.parserBuilder()
+                            .setSigningKey(jwtKey)
+                            .setClock(() -> Date.from(clock.instant()))
+                            .build()
+                            .parseClaimsJws(token)
+                            .getBody()
+                            .getSubject(),
+                    SessionInfo.class));
+        } catch (JwtException | JsonProcessingException e) {
+            return Optional.empty();
+        }
+    }
+
+    @SneakyThrows
+    private String toToken(SessionInfo sessionInfo) {
+        return Jwts.builder()
+                .setSubject(objectMapper.writeValueAsString(sessionInfo))
+                .setExpiration(Date.from(clock.instant().plus(TOKEN_TTL)))
+                .signWith(jwtKey)
+                .compact();
     }
 
     @Override
@@ -46,8 +75,8 @@ public class LoginManager implements HandlerMethodArgumentResolver {
             throw new UnknownTokenException();
         }
 
-        SessionToken sessionToken = SessionToken.fromString(token);
-        return userIdForToken(sessionToken)
+        return fromToken(token)
+                .map(SessionInfo::getUserId)
                 .orElseThrow(UnknownTokenException::new);
     }
 }

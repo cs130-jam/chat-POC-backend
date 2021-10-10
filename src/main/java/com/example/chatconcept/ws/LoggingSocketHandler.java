@@ -4,7 +4,7 @@ import static com.example.chatconcept.user.LoginManager.SESSION_TOKEN_KEY;
 
 import com.example.chatconcept.UnknownTokenException;
 import com.example.chatconcept.user.LoginManager;
-import com.example.chatconcept.user.SessionToken;
+import com.example.chatconcept.user.SessionInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.socket.TextMessage;
@@ -27,8 +27,9 @@ public class LoggingSocketHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {
-        SessionToken sessionToken = SessionToken.fromString((String) session.getAttributes().get(SESSION_TOKEN_KEY));
-        UUID userId = loginManager.userIdForToken(sessionToken).orElseThrow(UnknownTokenException::new);
+        UUID userId = loginManager.fromToken((String) session.getAttributes().get(SESSION_TOKEN_KEY))
+                .map(SessionInfo::getUserId)
+                .orElseThrow(UnknownTokenException::new);
         sessionRepository.insert(userId, session);
     }
 }

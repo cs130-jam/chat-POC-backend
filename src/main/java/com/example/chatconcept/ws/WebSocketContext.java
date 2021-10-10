@@ -1,6 +1,6 @@
 package com.example.chatconcept.ws;
 
-import com.example.chatconcept.user.LoginManager;
+import com.example.chatconcept.user.UserContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
@@ -8,10 +8,9 @@ import org.springframework.context.annotation.Import;
         WebSocketConfig.class,
         LoggingSocketHandler.class,
         PrincipalHandshakeInterceptor.class,
-
         InMemorySessionRepository.class,
 
-        LoginManager.class
+        UserContext.class
 })
 public class WebSocketContext {
 

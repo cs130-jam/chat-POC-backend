@@ -12,11 +12,11 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
 
-    private static final String WS_URL = "/jam";
+    private static final String WS_URL = "/ws/jam";
     private final LoggingSocketHandler socketHandler;
 
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(socketHandler, WS_URL)
-                .setAllowedOrigins("http://localhost:3000");
+                .setAllowedOrigins("http://localhost");
     }
 }

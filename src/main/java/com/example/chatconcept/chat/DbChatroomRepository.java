@@ -29,9 +29,6 @@ public class DbChatroomRepository implements ChatroomRepository {
 
     private final DSLContext context;
 
-    @Autowired
-    private DataSource dataSource;
-
     @Override
     public Optional<Chatroom> get(UUID roomId) {
         List<UUID> chatroomMembers = context.selectFrom(CHATROOM_MEMBERS)
